@@ -77,14 +77,21 @@ var createScene = function () {
     scene.activeCamera = followCamera;
     createLights(scene);
     // Skybox
-	var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", 52.5, scene);
-	var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
-	skyboxMaterial.backFaceCulling = false;
-	skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture("images/skybox", scene);
-	skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
-	skyboxMaterial.diffuseColor = new BABYLON.Color3(0, 0, 0);
-	skyboxMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
-	skybox.material = skyboxMaterial;
+	var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:2000}, scene);
+    var skyboxMaterial = new BABYLON.StandardMaterial("skyBox", scene);
+    skyboxMaterial.backFaceCulling = false;
+    var files = [
+        "images/skybox/skybox_ny.jpg",
+        "images/skybox/skybox_nx.jpg",
+        "images/skybox/skybox_nz.jpg",
+        "images/skybox/skybox_px.jpg",
+        "images/skybox/skybox_py.jpg",
+        "images/skybox/skybox_pz.jpg",
+    ];
+    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture.CreateFromImages(files, scene);
+    skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
+    skyboxMaterial.disableLighting = true;
+    skybox.material = skyboxMaterial;
     return scene;
 };
 
